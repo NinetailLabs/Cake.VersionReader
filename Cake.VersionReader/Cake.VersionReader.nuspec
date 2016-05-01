@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+      <id>Cake.VersionReader</id>
+      <version>$version$</version>
+      <authors>NineTail Labs</authors>
+      <owners>NineTail Labs</owners>
+      <title>Cake.VersionReader</title>
+      <description>Cake Build addon to assist with reading version numbers from an assembly.</description>
+      <summary>Cake Build addon to assist with reading version numbers from an assembly.</summary>
+      <licenseUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/master/LICENSE</licenseUrl>
+      <projectUrl>https://github.com/NinetailLabs/Cake.VersionReader</projectUrl>
+      <iconUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/develop/icon.png</iconUrl>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <copyright>Copyright (c) NineTail Labs 2016</copyright>
+      <releaseNotes>Initial Release</releaseNotes>
+      <tags>Cake Script Build</tags>
+
+      <dependencies>
+         <dependency id="Cake.Core" version="0.10.1" />
+      </dependencies>
+   </metadata>
+
+   <files>
+      <file src="./Cake.VersionReader/bin/Release/Cake.VersionReader.dll" target="lib/net45" />
+      <file src="./Cake.VersionReader/bin/Release/Cake.VersionReader.xml" target="lib/net45" />      
+   </files>
+</package>
