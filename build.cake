@@ -82,7 +82,7 @@ Task ("Push")
 
 		NuGetPush (newestNupkg, new NuGetPushSettings { 
 			Verbosity = NuGetVerbosity.Detailed,
-			Source = "https://www.nuget.org/api/v2/",
+			Source = "nuget.org",
 			ApiKey = apiKey
 		});
 	});
