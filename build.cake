@@ -1,42 +1,46 @@
-var sln = "./Cake.VersionReader.sln";
-var nuspec = "./Cake.VersionReader.nuspec";
+//Addins
+#addin Cake.VersionReader
 
-var target = Argument ("target", "lib");
+var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
+var nuspec = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 
-Task ("lib").Does (() => 
-{
-	NuGetRestore (sln);
-	DotNetBuild (sln, c => c.Configuration = "Release");
-});
+var target = Argument ("target", "Build");
 
-Task ("nuget").IsDependentOn ("lib").Does (() => 
-{
-	CreateDirectory ("./nupkg/");
+Task ("Build")
+	.Does (() => {
+		NuGetRestore (sln);
+		DotNetBuild (sln, c => c.Configuration = "Release");
+	});
 
-	NuGetPack (nuspec, new NuGetPackSettings { 
-		Verbosity = NuGetVerbosity.Detailed,
-		OutputDirectory = "./nupkg/",
-		// NuGet messes up path on mac, so let's add ./ in front again
-		BasePath = "././",
-	});	
-});
+Task ("Nuget")
+	.IsDependentOn ("Build")
+	.Does (() => {
+		CreateDirectory ("./nupkg/");
 
-Task ("push").IsDependentOn ("nuget").Does (() =>
-{
-	// Get the newest (by last write time) to publish
-	var newestNupkg = GetFiles ("nupkg/*.nupkg")
-		.OrderBy (f => new System.IO.FileInfo (f.FullPath).LastWriteTimeUtc)
-		.LastOrDefault ();
+		NuGetPack (nuspec, new NuGetPackSettings { 
+			Verbosity = NuGetVerbosity.Detailed,
+			OutputDirectory = "./nupkg/",
+			// NuGet messes up path on mac, so let's add ./ in front again
+			BasePath = "././",
+		});	
+	});
 
-	var apiKey = TransformTextFile ("./.nugetapikey").ToString ();
+Task ("Push")
+	.IsDependentOn ("Nuget").Does (() => {
+		// Get the newest (by last write time) to publish
+		var newestNupkg = GetFiles ("nupkg/*.nupkg")
+			.OrderBy (f => new System.IO.FileInfo (f.FullPath).LastWriteTimeUtc)
+			.LastOrDefault ();
 
-	//NuGetPush (newestNupkg, new NuGetPushSettings { 
-	//	Verbosity = NuGetVerbosity.Detailed,
-	//	ApiKey = apiKey
-	//});
-});
+		var apiKey = TransformTextFile ("./.nugetapikey").ToString ();
 
-Task ("clean").Does (() => 
+		//NuGetPush (newestNupkg, new NuGetPushSettings { 
+		//	Verbosity = NuGetVerbosity.Detailed,
+		//	ApiKey = apiKey
+		//});
+	});
+
+Task ("Clean").Does (() => 
 {
 	CleanDirectories ("./**/bin");
 	CleanDirectories ("./**/obj");
@@ -46,5 +50,8 @@ Task ("clean").Does (() =>
 
 	DeleteFiles ("./**/*.apk");
 });
+
+Task("Default")
+	.IsDependentOn("Build");
 
 RunTarget (target);
