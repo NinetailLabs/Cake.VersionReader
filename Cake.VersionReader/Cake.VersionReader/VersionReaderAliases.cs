@@ -30,9 +30,9 @@ namespace Cake.VersionReader
         /// Get the version number with the current build number appended.
         /// This is based on the article found here: http://www.xavierdecoster.com/semantic-versioning-auto-incremented-nuget-package-versions
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="file"></param>
-        /// <param name="buildNumber"></param>
+        /// <param name="context">The context</param>
+        /// <param name="file">The binary to read from</param>
+        /// <param name="buildNumber">The build number as provided by the build serveer</param>
         /// <returns>Version number in the format '0.0.0.0-CI00000'</returns>
         public static string GetVersionNumberWithContinuesIntegrationNumberAppended(this ICakeContext context, FilePath file, int buildNumber)
         {
