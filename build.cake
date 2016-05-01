@@ -1,27 +1,35 @@
 //Addins
 #addin Cake.VersionReader
+#addin Cake.FileHelpers
 
 var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
 var nuspec = "./Cake.VersionReader/Cake.VersionReader.nuspec";
+var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release";
+var releaseDll = "/Cake.VersionReader.dll";
+var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 
 var target = Argument ("target", "Build");
+
+var version = "0.0.0";
 
 Task ("Build")
 	.Does (() => {
 		NuGetRestore (sln);
 		DotNetBuild (sln, c => c.Configuration = "Release");
+		var file = MakeAbsolute(Directory(releaseFolder)) + releaseDll;
+		version = GetVersionNumber(file);
+		Information("Version: " + version);
 	});
 
 Task ("Nuget")
 	.IsDependentOn ("Build")
 	.Does (() => {
 		CreateDirectory ("./nupkg/");
-
+		ReplaceRegexInFiles(nuspecFile, "0.0.0", version);
+		
 		NuGetPack (nuspec, new NuGetPackSettings { 
 			Verbosity = NuGetVerbosity.Detailed,
-			OutputDirectory = "./nupkg/",
-			// NuGet messes up path on mac, so let's add ./ in front again
-			BasePath = "././",
+			OutputDirectory = "./nupkg/"
 		});	
 	});
 
@@ -52,6 +60,6 @@ Task ("Clean").Does (() =>
 });
 
 Task("Default")
-	.IsDependentOn("Build");
+	.IsDependentOn("Nuget");
 
 RunTarget (target);
