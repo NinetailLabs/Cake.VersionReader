@@ -1,40 +1,32 @@
 ﻿using System.Collections.Generic;
 using Cake.Core.Diagnostics;
 
-namespace Cake.Xamarin.Tests.Fakes
+namespace Cake.VersionReader.Tests.Fakes
 {
     /// <summary>
     /// Implementation of a <see cref="ICakeLog"/> that saves all messages written to it.
     /// </summary>
     public sealed class FakeLog : ICakeLog
     {
-        private readonly List<string> _messages;
-
         /// <summary>
         /// Gets the messages.
         /// </summary>
         /// <value>The messages.</value>
-        public List<string> Messages
-        {
-            get { return _messages; }
-        }
+        public List<string> Messages { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FakeLog"/> class.
         /// </summary>
         public FakeLog()
         {
-            _messages = new List<string>();
+            Messages = new List<string>();
         }
 
         /// <summary>
         /// Gets the verbosity.
         /// </summary>
         /// <value>The verbosity.</value>
-        public Verbosity Verbosity
-        {
-            get { return Verbosity.Diagnostic; }
-        }
+        public Verbosity Verbosity => Verbosity.Diagnostic;
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to the
@@ -46,7 +38,7 @@ namespace Cake.Xamarin.Tests.Fakes
         /// <param name="args">An array of objects to write using format.</param>
         public void Write(Verbosity verbosity, LogLevel level, string format, params object[] args)
         {
-            _messages.Add(string.Format(format, args));
+            Messages.Add(string.Format(format, args));
         }
     }
 }

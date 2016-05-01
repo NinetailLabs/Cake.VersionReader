@@ -1,49 +1,44 @@
 ﻿using System;
-using Cake.Core.IO;
 using Cake.Core;
-using System.Collections.Generic;
+using Cake.Core.IO;
 
-namespace Cake.Xamarin.Tests.Fakes
+namespace Cake.VersionReader.Tests.Fakes
 {
     public class FakeCakeContext
     {
-        ICakeContext context;
-        FakeLog log;
-        DirectoryPath testsDir;
+        private readonly ICakeContext _context;
+        private readonly FakeLog _log;
+        private readonly DirectoryPath _testsDir;
 
         public FakeCakeContext ()
         {
-            testsDir = new DirectoryPath (
+            _testsDir = new DirectoryPath (
                 System.IO.Path.GetFullPath (AppDomain.CurrentDomain.BaseDirectory));
             
             var fileSystem = new FileSystem ();
             var environment = new CakeEnvironment ();
             var globber = new Globber (fileSystem, environment);
-            log = new FakeLog ();
+            _log = new FakeLog ();
             var args = new FakeCakeArguments ();
-            var processRunner = new ProcessRunner (environment, log);
+            var processRunner = new ProcessRunner (environment, _log);
             var registry = new WindowsRegistry ();
 
-            context = new CakeContext (fileSystem, environment, globber, log, args, processRunner, registry);
-            context.Environment.WorkingDirectory = testsDir;
+            _context = new CakeContext (fileSystem, environment, globber, _log, args, processRunner, registry);
+            _context.Environment.WorkingDirectory = _testsDir;
         }
 
-        public DirectoryPath WorkingDirectory {
-            get { return testsDir; }
-        }
-            
-        public ICakeContext CakeContext {
-            get { return context; }
-        }
+        public DirectoryPath WorkingDirectory => _testsDir;
+
+        public ICakeContext CakeContext => _context;
 
         public string GetLogs ()
         {
-            return string.Join(Environment.NewLine, log.Messages);
+            return string.Join(Environment.NewLine, _log.Messages);
         }
 
         public void DumpLogs ()
         {
-            foreach (var m in log.Messages)
+            foreach (var m in _log.Messages)
                 Console.WriteLine (m);
         }
     }

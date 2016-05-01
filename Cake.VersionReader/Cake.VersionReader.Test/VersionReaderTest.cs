@@ -1,4 +1,4 @@
-﻿using Cake.Xamarin.Tests.Fakes;
+﻿using Cake.VersionReader.Tests.Fakes;
 using NUnit.Framework;
 
 namespace Cake.VersionReader.Tests
