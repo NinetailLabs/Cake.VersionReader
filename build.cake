@@ -10,16 +10,31 @@ var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 
 var target = Argument ("target", "Build");
 var buildType = Argument<string>("buildType", "develop");
+var buildCounter = Argument<int>("buildCounter", 0);
 
 var version = "0.0.0";
+var ciVersion = "0.0.0-CI00000";
+var runningOnTeamCity = false;
+
+//Find out if we are running on a Build Server
+Task("DiscoverBuildDetails")
+	.Does(() =>
+	{
+		runningOnTeamCity = TeamCity.IsRunningOnTeamCity;
+		Information("Running on TeamCity: " + runningOnTeamCity);
+	});
 
 Task ("Build")
+.IsDependentOn("DiscoverBuildDetails")
 	.Does (() => {
 		NuGetRestore (sln);
 		DotNetBuild (sln, c => c.Configuration = "Release");
 		var file = MakeAbsolute(Directory(releaseFolder)) + releaseDll;
 		version = GetVersionNumber(file);
+		ciVersion = GetVersionNumberWithContinuesIntegrationNumberAppended(file, buildCounter);
 		Information("Version: " + version);
+		Information("CI Version: " + ciVersion);
+		PushVersionToTeamcity(ciVersion);
 	});
 
 Task ("Nuget")
@@ -45,10 +60,10 @@ Task ("Push")
 
 		var apiKey = TransformTextFile ("c:/nuget/nugetapikey").ToString ();
 
-		//NuGetPush (newestNupkg, new NuGetPushSettings { 
-		//	Verbosity = NuGetVerbosity.Detailed,
-		//	ApiKey = apiKey
-		//});
+		NuGetPush (newestNupkg, new NuGetPushSettings { 
+			Verbosity = NuGetVerbosity.Detailed,
+			ApiKey = apiKey
+		});
 	});
 
 Task ("Clean").Does (() => 
@@ -66,3 +81,43 @@ Task("Default")
 	.IsDependentOn("Push");
 
 RunTarget (target);
+
+public void StartBlock(string blockName)
+{
+		if(runningOnTeamCity)
+		{
+			TeamCity.WriteStartBlock(blockName);
+		}
+}
+
+public void StartBuildBlock(string blockName)
+{
+	if(runningOnTeamCity)
+	{
+		TeamCity.WriteStartBuildBlock(blockName);
+	}
+}
+
+public void EndBlock(string blockName)
+{
+	if(runningOnTeamCity)
+	{
+		TeamCity.WriteEndBlock(blockName);
+	}
+}
+
+public void EndBuildBlock(string blockName)
+{
+	if(runningOnTeamCity)
+	{
+		TeamCity.WriteEndBuildBlock(blockName);
+	}
+}
+
+public void PushVersionToTeamcity(string version)
+{
+	if(runningOnTeamCity)
+	{
+		TeamCity.SetBuildNumber(version);
+	}
+}
