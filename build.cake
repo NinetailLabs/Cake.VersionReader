@@ -2,6 +2,7 @@
 #addin Cake.VersionReader
 #addin Cake.FileHelpers
 
+var tools = "./tools";
 var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
 var nuspec = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release";
@@ -15,6 +16,7 @@ var buildCounter = Argument<int>("buildCounter", 0);
 var version = "0.0.0";
 var ciVersion = "0.0.0-CI00000";
 var runningOnTeamCity = false;
+var testSucceeded = true;
 
 //Find out if we are running on a Build Server
 Task("DiscoverBuildDetails")
@@ -37,9 +39,26 @@ Task ("Build")
 		PushVersionToTeamcity(ciVersion);
 	});
 
+//Execute Unit tests
+Task("UnitTest")
+	.IsDependentOn("Build")
+	.Does(() =>
+	{
+		StartBlock("Unit Testing");
+		
+		using(var process = StartAndReturnProcess(tools + "/NUnit.ConsoleRunner/tools/nunit3-console.exe", new ProcessSettings { Arguments = "\"./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll\" --teamcity --workers=1"}))
+			{
+				process.WaitForExit();
+				Information("Exit Code {0}", process.GetExitCode());
+				testSucceeded = false;
+			};
+		
+		EndBlock("Unit Testing");
+	});
+	
 Task ("Nuget")
-	.WithCriteria(buildType == "master")
-	.IsDependentOn ("Build")
+	.WithCriteria(buildType == "master" && testSucceeded == true)
+	.IsDependentOn ("UnitTest")
 	.Does (() => {
 		CreateDirectory ("./nupkg/");
 		ReplaceRegexInFiles(nuspecFile, "0.0.0", version);
@@ -51,7 +70,7 @@ Task ("Nuget")
 	});
 
 Task ("Push")
-	.WithCriteria(buildType == "master")
+	.WithCriteria(buildType == "master"  && testSucceeded == true)
 	.IsDependentOn ("Nuget").Does (() => {
 		// Get the newest (by last write time) to publish
 		var newestNupkg = GetFiles ("nupkg/*.nupkg")
