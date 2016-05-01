@@ -23,7 +23,7 @@ namespace Cake.VersionReader
             var filePath = file.MakeAbsolute(context.Environment).FullPath;
             var version = AssemblyName.GetAssemblyName(filePath).Version;
 
-            return version.ToString();
+            return $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace Cake.VersionReader
         public static string GetVersionNumberWithContinuesIntegrationNumberAppended(this ICakeContext context, FilePath file, int buildNumber)
         {
             var filePath = file.MakeAbsolute(context.Environment).FullPath;
-            var version = AssemblyName.GetAssemblyName(filePath).Version.ToString();
-            var adjustedVersion = $"{version}-CI{buildNumber.ToString("00000")}";
+            var version = AssemblyName.GetAssemblyName(filePath).Version;
+            var adjustedVersion = $"{version.Major}.{version.Minor}.{version.Build}-CI{buildNumber.ToString("00000")}";
             return adjustedVersion;
         }
     }
