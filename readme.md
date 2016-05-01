@@ -14,3 +14,6 @@ The following methods are provided:
 
 *GetVersionNumberWithContinuesIntegrationNumberAppended(this ICakeContext context, FilePath file, int buildNumber)*
 - Get the CI version number in the format "0.0.0-CI00000"
+
+###Icon
+[Cyclops](https://thenounproject.com/term/cyclops/60203/) by [Mike Hince](https://thenounproject.com/zer0mike/) from the Noun Project, remixed with the Cake icon.
