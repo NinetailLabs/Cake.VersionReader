@@ -34,6 +34,7 @@ namespace Cake.VersionReader
         /// <param name="file">The binary to read from</param>
         /// <param name="buildNumber">The build number as provided by the build serveer</param>
         /// <returns>Version number in the format '0.0.0.0-CI00000'</returns>
+        [CakeMethodAlias]
         public static string GetVersionNumberWithContinuesIntegrationNumberAppended(this ICakeContext context, FilePath file, int buildNumber)
         {
             var filePath = file.MakeAbsolute(context.Environment).FullPath;
