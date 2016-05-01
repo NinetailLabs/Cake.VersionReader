@@ -33,6 +33,7 @@ Param(
     [string]$Script = "build.cake",
     [string]$Target = "Default",
     [string]$Configuration = "Release",
+	[string]$BuildType = "Develop",
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity = "Verbose",
     [switch]$Experimental,

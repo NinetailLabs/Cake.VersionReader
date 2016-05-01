@@ -9,6 +9,7 @@ var releaseDll = "/Cake.VersionReader.dll";
 var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 
 var target = Argument ("target", "Build");
+var buildType = Argument<string>("buildType", "develop");
 
 var version = "0.0.0";
 
@@ -22,6 +23,7 @@ Task ("Build")
 	});
 
 Task ("Nuget")
+	.WithCriteria(buildType == "master")
 	.IsDependentOn ("Build")
 	.Does (() => {
 		CreateDirectory ("./nupkg/");
@@ -34,13 +36,14 @@ Task ("Nuget")
 	});
 
 Task ("Push")
+	.WithCriteria(buildType == "master")
 	.IsDependentOn ("Nuget").Does (() => {
 		// Get the newest (by last write time) to publish
 		var newestNupkg = GetFiles ("nupkg/*.nupkg")
 			.OrderBy (f => new System.IO.FileInfo (f.FullPath).LastWriteTimeUtc)
 			.LastOrDefault ();
 
-		var apiKey = TransformTextFile ("./.nugetapikey").ToString ();
+		var apiKey = TransformTextFile ("c:/nuget/nugetapikey").ToString ();
 
 		//NuGetPush (newestNupkg, new NuGetPushSettings { 
 		//	Verbosity = NuGetVerbosity.Detailed,
@@ -60,6 +63,6 @@ Task ("Clean").Does (() =>
 });
 
 Task("Default")
-	.IsDependentOn("Nuget");
+	.IsDependentOn("Push");
 
 RunTarget (target);
