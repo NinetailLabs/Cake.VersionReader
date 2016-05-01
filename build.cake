@@ -71,16 +71,18 @@ Task ("Nuget")
 
 Task ("Push")
 	.WithCriteria(buildType == "master"  && testSucceeded == true)
-	.IsDependentOn ("Nuget").Does (() => {
+	.IsDependentOn ("Nuget")
+	.Does (() => {
 		// Get the newest (by last write time) to publish
 		var newestNupkg = GetFiles ("nupkg/*.nupkg")
 			.OrderBy (f => new System.IO.FileInfo (f.FullPath).LastWriteTimeUtc)
-			.LastOrDefault ();
+			.LastOrDefault();
 
-		var apiKey = TransformTextFile ("c:/nuget/nugetapikey").ToString ();
+		var apiKey = TransformTextFile ("c:/nuget/nugetapikey").ToString();
 
 		NuGetPush (newestNupkg, new NuGetPushSettings { 
 			Verbosity = NuGetVerbosity.Detailed,
+			Source = "https://www.nuget.org/api/v2/",
 			ApiKey = apiKey
 		});
 	});
