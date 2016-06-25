@@ -27,5 +27,21 @@ namespace Cake.VersionReader.Tests
             var result = _context.CakeContext.GetVersionNumberWithContinuesIntegrationNumberAppended("./TestData/SemVerTest.dll", 5);
             Assert.That(result, Is.EqualTo("1.1.2-CI00005"));
         }
+
+        [Test]
+        public void RetrieveFullVersionNumber()
+        {
+            var result = _context.CakeContext.GetFullVersionNumber("./TestData/SemVerTest.dll");
+            Assert.That(result, Is.EqualTo("1.1.2.0"));
+        }
+
+        [Test]
+        public void RetrieveFullBuildServerVersionNumber()
+        {
+            var result =
+                _context.CakeContext.GetFullVersionNumberWithContinuesIntegrationNumberAppended(
+                    "./TestData/SemVerTest.dll", 12);
+            Assert.That(result, Is.EqualTo("1.1.2.0-CI00012"));
+        }
     }
 }
