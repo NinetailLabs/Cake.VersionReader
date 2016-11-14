@@ -7,7 +7,7 @@ using Cake.Core.IO;
 namespace Cake.VersionReader
 {
     /// <summary>
-    /// Version Reader Aliases
+    /// Contains functionality for retrieving version numbers from assemblies
     /// </summary>
     [CakeAliasCategory("Version Reader")]
     public static class VersionReaderAliases
