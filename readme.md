@@ -1,10 +1,10 @@
 ##Cake.VersionReader
 
-An addin for [CakeBuild](http://cakebuild.net/) that allows for the easy retrieval of version numbers from an assembly. Also support creating CI version numbers that fit with SemVer based on [this](http://www.xavierdecoster.com/semantic-versioning-auto-incremented-nuget-package-versions) article.
+An addin for [Cake](http://cakebuild.net/) that allows for the easy retrieval of version numbers from an assembly. Also support creating CI version numbers that fit with SemVer based on [this](http://www.xavierdecoster.com/semantic-versioning-auto-incremented-nuget-package-versions) article.
 
-You can easilty reference Cake.VersionReader directly in you build script using Cake's Addin syntax:
+You can easilty reference Cake.VersionReader directly in your build script using Cake's Addin syntax:
 ```csharp
-#addin "Cake.FileHelpers"
+#addin nuget:?package=Cake.VersionReader
 ```
 
 ###Methods
