@@ -1,6 +1,9 @@
 //Addins
 #addin Cake.VersionReader
 #addin Cake.FileHelpers
+#tool "nuget:?package=NUnit.ConsoleRunner"
+
+#region Paths
 
 var tools = "./tools";
 var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
@@ -8,22 +11,40 @@ var nuspec = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release";
 var releaseDll = "/Cake.VersionReader.dll";
 var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
+var unitTestPaths = "./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll";
+var testResultFile = "./TestResult.xml";
+var testErrorFile = "./errors.xml";
+
+#endregion
+
+#region Arguments
 
 var target = Argument ("target", "Build");
 var buildType = Argument<string>("buildType", "develop");
 var buildCounter = Argument<int>("buildCounter", 0);
 
+#endregion
+
+#region Runtime Variables
+
 var version = "0.0.0";
 var ciVersion = "0.0.0-CI00000";
+var runningOnAppVeyor = false;
 var runningOnTeamCity = false;
 var testSucceeded = true;
 
-//Find out if we are running on a Build Server
+#endregion
+
+#region Tasks
+
+// Find out if we are running on a Build Server
 Task("DiscoverBuildDetails")
 	.Does(() =>
 	{
 		runningOnTeamCity = TeamCity.IsRunningOnTeamCity;
 		Information("Running on TeamCity: " + runningOnTeamCity);
+		runningOnAppVeyor = AppVeyor.IsRunningOnAppVeyor;
+		Information("Running on AppVeyor: " + runningOnAppVeyor);
 	});
 
 Task ("Build")
@@ -36,7 +57,7 @@ Task ("Build")
 		ciVersion = GetVersionNumberWithContinuesIntegrationNumberAppended(file, buildCounter);
 		Information("Version: " + version);
 		Information("CI Version: " + ciVersion);
-		PushVersionToTeamcity(ciVersion);
+		PushVersion(ciVersion);
 	});
 
 //Execute Unit tests
@@ -46,18 +67,29 @@ Task("UnitTest")
 	{
 		StartBlock("Unit Testing");
 		
-		using(var process = StartAndReturnProcess(tools + "/NUnit.ConsoleRunner/tools/nunit3-console.exe", new ProcessSettings { Arguments = "\"./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll\" --teamcity --workers=1"}))
-			{
-				process.WaitForExit();
-				Information("Exit Code {0}", process.GetExitCode());
-				testSucceeded = false;
-			};
+		// using(var process = StartAndReturnProcess(tools + "/NUnit.ConsoleRunner/tools/nunit3-console.exe", new ProcessSettings { Arguments = "\"./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll\" --teamcity --workers=1"}))
+		// 	{
+		// 		process.WaitForExit();
+		// 		Information("Exit Code {0}", process.GetExitCode());
+		// 		testSucceeded = false;
+		// 	};
+
+		var testAssemblies = GetFiles(unitTestPaths);
+
+		NUnit3(testAssemblies, new NUnit3Settings {
+    				ErrorOutputFile = testErrorFile,
+					OutputFile = testResultFile,
+					WorkingDirectory = ".",
+					Work = MakeAbsolute(Directory("."))
+    			});
+
+		PushTestResults(testResultFile);
 		
 		EndBlock("Unit Testing");
 	});
 	
 Task ("Nuget")
-	.WithCriteria(buildType == "master" && testSucceeded == true)
+	.WithCriteria(buildType == "master")
 	.IsDependentOn ("UnitTest")
 	.Does (() => {
 		CreateDirectory ("./nupkg/");
@@ -70,7 +102,7 @@ Task ("Nuget")
 	});
 
 Task ("Push")
-	.WithCriteria(buildType == "master"  && testSucceeded == true)
+	.WithCriteria(buildType == "master")
 	.IsDependentOn ("Nuget")
 	.Does (() => {
 		// Get the newest (by last write time) to publish
@@ -78,11 +110,11 @@ Task ("Push")
 			.OrderBy (f => new System.IO.FileInfo (f.FullPath).LastWriteTimeUtc)
 			.LastOrDefault();
 
-		var apiKey = TransformTextFile ("c:/nuget/nugetapikey").ToString();
+		var apiKey = EnvironmentVariable("NugetKey");
 
 		NuGetPush (newestNupkg, new NuGetPushSettings { 
 			Verbosity = NuGetVerbosity.Detailed,
-			Source = "nuget.org",
+			Source = "https://www.nuget.org/api/v2/package/",
 			ApiKey = apiKey
 		});
 	});
@@ -101,7 +133,11 @@ Task ("Clean").Does (() =>
 Task("Default")
 	.IsDependentOn("Push");
 
+#endregion
+
 RunTarget (target);
+
+#region Helper Methods
 
 public void StartBlock(string blockName)
 {
@@ -135,10 +171,26 @@ public void EndBuildBlock(string blockName)
 	}
 }
 
-public void PushVersionToTeamcity(string version)
+public void PushVersion(string version)
 {
 	if(runningOnTeamCity)
 	{
 		TeamCity.SetBuildNumber(version);
 	}
+	if(runningOnAppVeyor)
+	{
+		Information("Pushing version to AppVeyor: " + version);
+		AppVeyor.UpdateBuildVersion(version);
+	}
 }
+
+public void PushTestResults(string filePath)
+{
+	var file = MakeAbsolute(File(filePath));
+	if(runningOnAppVeyor)
+	{
+		AppVeyor.UploadTestResults(file, AppVeyorTestResultsType.NUnit3);
+	}
+}
+
+#endregion
