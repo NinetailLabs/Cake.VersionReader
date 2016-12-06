@@ -34,7 +34,7 @@ Param(
     [string]$Target = "Default",
     [string]$Configuration = "Release",
 	[string]$BuildType = "Develop",
-	[int]$BuilCounter = 0,
+	[int]$BuildCounter = 0,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity = "Verbose",
     [switch]$Experimental,
