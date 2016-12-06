@@ -13,7 +13,8 @@
       <iconUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/develop/icon.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) NineTail Labs 2016</copyright>
-      <releaseNotes>Added support for regular 4-digit version numbers</releaseNotes>
+      <releaseNotes>Readme cleanup.
+      Moved build to AppVeyor</releaseNotes>
       <tags>Cake Script Build</tags>
 
       <dependencies>

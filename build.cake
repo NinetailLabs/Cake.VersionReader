@@ -1,6 +1,6 @@
 //Addins
-#addin Cake.VersionReader
-#addin Cake.FileHelpers
+#addin nuget:?package=Cake.VersionReader
+#addin nuget:?package=Cake.FileHelpers
 #tool "nuget:?package=NUnit.ConsoleRunner"
 
 #region Paths
