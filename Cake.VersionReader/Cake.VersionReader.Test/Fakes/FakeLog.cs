@@ -26,7 +26,11 @@ namespace Cake.VersionReader.Tests.Fakes
         /// Gets the verbosity.
         /// </summary>
         /// <value>The verbosity.</value>
-        public Verbosity Verbosity => Verbosity.Diagnostic;
+        public Verbosity Verbosity
+        {
+            get { return Verbosity.Diagnostic; }
+            set { }
+        }
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to the
