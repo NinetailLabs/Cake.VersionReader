@@ -1,6 +1,8 @@
 ﻿using System;
 using Cake.Core;
 using Cake.Core.IO;
+using Cake.Core.Tooling;
+using Cake.Testing;
 
 namespace Cake.VersionReader.Tests.Fakes
 {
@@ -16,14 +18,16 @@ namespace Cake.VersionReader.Tests.Fakes
                 System.IO.Path.GetFullPath (AppDomain.CurrentDomain.BaseDirectory));
             
             var fileSystem = new FileSystem ();
-            var environment = new CakeEnvironment ();
+            _log = new FakeLog();
+            var environment = new CakeEnvironment (new CakePlatform(), new CakeRuntime(), _log);
             var globber = new Globber (fileSystem, environment);
-            _log = new FakeLog ();
+            
             var args = new FakeCakeArguments ();
             var processRunner = new ProcessRunner (environment, _log);
             var registry = new WindowsRegistry ();
 
-            _context = new CakeContext (fileSystem, environment, globber, _log, args, processRunner, registry);
+            var toolLocator = new ToolLocator(environment, new ToolRepository(environment), new ToolResolutionStrategy(fileSystem, environment, globber, new FakeConfiguration()));
+            _context = new CakeContext (fileSystem, environment, globber, _log, args, processRunner, registry, toolLocator);
             _context.Environment.WorkingDirectory = _testsDir;
         }
 

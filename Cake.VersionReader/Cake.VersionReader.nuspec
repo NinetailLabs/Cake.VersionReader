@@ -13,12 +13,11 @@
       <iconUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/develop/icon.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) NineTail Labs 2016</copyright>
-      <releaseNotes>Readme cleanup.
-      Moved build to AppVeyor</releaseNotes>
+      <releaseNotes>Updated Cake version</releaseNotes>
       <tags>Cake Script Build</tags>
 
       <dependencies>
-         <dependency id="Cake.Core" version="0.10.1" />
+         <dependency id="Cake.Core" version="0.17.0" />
       </dependencies>
    </metadata>
 
