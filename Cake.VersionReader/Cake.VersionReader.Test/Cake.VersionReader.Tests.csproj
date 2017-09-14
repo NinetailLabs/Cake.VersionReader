@@ -62,15 +62,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cake.VersionReader\Cake.VersionReader.csproj">
-      <Project>{8f6f4af2-f081-4664-a3a9-c6dc1b65194f}</Project>
-      <Name>Cake.VersionReader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="TestData\SemVerTest.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cake.VersionReader\Cake.VersionReader.csproj">
+      <Project>{bfec8752-7c2b-4f8a-b19b-38dc44bb9c7b}</Project>
+      <Name>Cake.VersionReader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

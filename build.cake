@@ -8,7 +8,7 @@
 var tools = "./tools";
 var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
 var nuspec = "./Cake.VersionReader/Cake.VersionReader.nuspec";
-var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release";
+var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release/net46";
 var releaseDll = "/Cake.VersionReader.dll";
 var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 var unitTestPaths = "./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll";
@@ -51,7 +51,10 @@ Task ("Build")
 .IsDependentOn("DiscoverBuildDetails")
 	.Does (() => {
 		NuGetRestore (sln);
-		DotNetBuild (sln, c => c.Configuration = "Release");
+		MSBuild (sln, new MSBuildSettings {
+			ToolVersion = MSBuildToolVersion.VS2017,
+			Configuration = "Release"
+		});
 		var file = MakeAbsolute(Directory(releaseFolder)) + releaseDll;
 		version = GetVersionNumber(file);
 		ciVersion = GetVersionNumberWithContinuesIntegrationNumberAppended(file, buildCounter);
@@ -67,13 +70,6 @@ Task("UnitTest")
 	{
 		StartBlock("Unit Testing");
 		
-		// using(var process = StartAndReturnProcess(tools + "/NUnit.ConsoleRunner/tools/nunit3-console.exe", new ProcessSettings { Arguments = "\"./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll\" --teamcity --workers=1"}))
-		// 	{
-		// 		process.WaitForExit();
-		// 		Information("Exit Code {0}", process.GetExitCode());
-		// 		testSucceeded = false;
-		// 	};
-
 		var testAssemblies = GetFiles(unitTestPaths);
 
 		NUnit3(testAssemblies, new NUnit3Settings {
