@@ -62,12 +62,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cake.VersionReader\Cake.VersionReader.csproj">
-      <Project>{8f6f4af2-f081-4664-a3a9-c6dc1b65194f}</Project>
-      <Name>Cake.VersionReader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="TestData\SemVerTest.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
