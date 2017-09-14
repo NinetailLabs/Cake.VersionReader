@@ -13,11 +13,12 @@
       <iconUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/develop/icon.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) NineTail Labs 2016</copyright>
-      <releaseNotes>Updated Cake version</releaseNotes>
+      <releaseNotes>Updated Cake version
+      Updated icon to use the Cake Contrib icon</releaseNotes>
       <tags>Cake Script Build</tags>
 
       <dependencies>
-         <dependency id="Cake.Core" version="0.17.0" />
+         <dependency id="Cake.Core" version="0.22.0" />
       </dependencies>
    </metadata>
 
