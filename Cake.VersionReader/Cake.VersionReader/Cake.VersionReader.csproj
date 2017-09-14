@@ -4,6 +4,13 @@
     <TargetFrameworks>net45;net46</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\Cake.VersionReader.xml</DocumentationFile>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net46|AnyCPU'">
+    <DocumentationFile>bin\Release\net46\Cake.VersionReader.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Cake.Core" Version="0.22.0" Condition="'$(TargetFramework)' == 'net46'" />
     <PackageReference Include="Cake.Core" Version="0.17.0" Condition="'$(TargetFramework)' == 'net45'" />
