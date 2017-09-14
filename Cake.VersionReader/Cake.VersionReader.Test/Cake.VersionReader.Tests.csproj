@@ -66,6 +66,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cake.VersionReader\Cake.VersionReader.csproj">
+      <Project>{bfec8752-7c2b-4f8a-b19b-38dc44bb9c7b}</Project>
+      <Name>Cake.VersionReader</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
