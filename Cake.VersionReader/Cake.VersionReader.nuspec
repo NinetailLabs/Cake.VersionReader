@@ -14,7 +14,8 @@
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) NineTail Labs 2016</copyright>
       <releaseNotes>Updated Cake version
-      Updated icon to use the Cake Contrib icon</releaseNotes>
+      Updated icon to use the Cake Contrib icon
+      Fixed nuspec to place binaries in the correct folder</releaseNotes>
       <tags>Cake Script Build</tags>
 
       <dependencies>
@@ -23,7 +24,7 @@
    </metadata>
 
    <files>
-      <file src="Cake.VersionReader/bin/Release/Cake.VersionReader.dll" target="lib/net45" />
-      <file src="Cake.VersionReader/bin/Release/Cake.VersionReader.xml" target="lib/net45" />      
+      <file src="Cake.VersionReader/bin/Release/Cake.VersionReader.dll" target="lib/net46" />
+      <file src="Cake.VersionReader/bin/Release/Cake.VersionReader.xml" target="lib/net46" />      
    </files>
 </package>
