@@ -13,18 +13,23 @@
       <iconUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/develop/icon.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) NineTail Labs 2016</copyright>
-      <releaseNotes>Updated Cake version
-      Updated icon to use the Cake Contrib icon
-      Fixed nuspec to place binaries in the correct folder</releaseNotes>
-      <tags>Cake Script Build</tags>
+      <releaseNotes>Add multi-targeting to support both Cake.Core 0.22.0 and Cake.Core 0.17.0</tags>
 
       <dependencies>
-         <dependency id="Cake.Core" version="0.22.0" />
+        <group targetFramework="net45">
+            <dependency id="Cake.Core" version="0.17.0" />
+        </group>
+        <group targetFramework="net46">
+            <dependency id="Cake.Core" version="0.22.0" />
+        </group>
       </dependencies>
    </metadata>
 
    <files>
-      <file src="Cake.VersionReader/bin/Release/Cake.VersionReader.dll" target="lib/net46" />
-      <file src="Cake.VersionReader/bin/Release/Cake.VersionReader.xml" target="lib/net46" />      
+      <file src="Cake.VersionReader/bin/Release/net45/Cake.VersionReader.dll" target="lib/net45" />
+      <file src="Cake.VersionReader/bin/Release/net45/Cake.VersionReader.xml" target="lib/net45" />      
+
+      <file src="Cake.VersionReader/bin/Release/net46/Cake.VersionReader.dll" target="lib/net46" />
+      <file src="Cake.VersionReader/bin/Release/net46/Cake.VersionReader.xml" target="lib/net46" />      
    </files>
 </package>
