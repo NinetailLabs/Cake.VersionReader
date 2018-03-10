@@ -1,5 +1,5 @@
 ## Cake.VersionReader
-
+ 
 [![Build status](https://ci.appveyor.com/api/projects/status/ns29kdfwrpfts3kh?svg=true)](https://ci.appveyor.com/project/DeadlyEmbrace/cake-versionreader)
 [![NuGet](https://img.shields.io/nuget/v/Cake.VersionReader.svg)](https://www.nuget.org/packages/Cake.VersionReader/)
 
