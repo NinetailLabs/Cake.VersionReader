@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.22.0" Condition="'$(TargetFramework)' == 'net46'" />
+    <PackageReference Include="Cake.Core" Version="0.26.0" Condition="'$(TargetFramework)' == 'net46'" />
     <PackageReference Include="Cake.Core" Version="0.17.0" Condition="'$(TargetFramework)' == 'net45'" />
     <PackageReference Include="SemVer.Git.MSBuild" Version="1.1.0" />
   </ItemGroup>
