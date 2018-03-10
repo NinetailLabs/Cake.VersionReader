@@ -23,7 +23,7 @@
             <dependency id="Cake.Core" version="0.17.0" />
         </group>
         <group targetFramework="net46">
-            <dependency id="Cake.Core" version="0.22.0" />
+            <dependency id="Cake.Core" version="0.26.0" />
         </group>
       </dependencies>
    </metadata>
