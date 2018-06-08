@@ -1,21 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
-    <DocumentationFile>bin\Release\net45\Cake.VersionReader.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\Cake.VersionReader.xml</DocumentationFile>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net46|AnyCPU'">
-    <DocumentationFile>bin\Release\net46\Cake.VersionReader.xml</DocumentationFile>
+
+  <PropertyGroup>
+    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.26.0" Condition="'$(TargetFramework)' == 'net46'" />
-    <PackageReference Include="Cake.Core" Version="0.17.0" Condition="'$(TargetFramework)' == 'net45'" />
-    <PackageReference Include="SemVer.Git.MSBuild" Version="1.1.0" />
+    <PackageReference Include="Cake.Core" Version="0.28.0" PrivateAssets="All" />
+    <PackageReference Include="SemVer.Git.MSBuild" Version="1.3.0" />
   </ItemGroup>
 
 </Project>

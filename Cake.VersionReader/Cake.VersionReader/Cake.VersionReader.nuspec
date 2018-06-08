@@ -10,28 +10,21 @@
       <summary>Cake Build addon to assist with reading version numbers from an assembly.</summary>
       <licenseUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/master/LICENSE</licenseUrl>
       <projectUrl>https://github.com/NinetailLabs/Cake.VersionReader</projectUrl>
-      <iconUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/develop/icon.png</iconUrl>
+      <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
-      <copyright>Copyright (c) NineTail Labs 2016</copyright>
+      <copyright>Copyright (c) NineTail Labs 2018</copyright>
       <releaseNotes>Updated Cake version
       Updated icon to use the Cake Contrib icon
       Fixed nuspec to place binaries in the correct folder</releaseNotes>
       <tags>Cake Script Build</tags>
 
       <dependencies>
-         <group targetFramework="net45">
-            <dependency id="Cake.Core" version="0.17.0" />
-        </group>
-        <group targetFramework="net46">
-            <dependency id="Cake.Core" version="0.26.0" />
-        </group>
+        <dependency id="Cake.Core" version="0.28.0" />
       </dependencies>
    </metadata>
 
    <files>
-      <file src="Cake.VersionReader/bin/Release/net45/Cake.VersionReader.dll" target="lib\net45" />
-      <file src="Cake.VersionReader/bin/Release/net45/Cake.VersionReader.xml" target="lib\net45" /> 
-      <file src="Cake.VersionReader/bin/Release/net46/Cake.VersionReader.dll" target="lib\net46" />
-      <file src="Cake.VersionReader/bin/Release/net46/Cake.VersionReader.xml" target="lib\net46" />      
+      <file src="Cake.VersionReader/bin/Release/netstandard2.0/Cake.VersionReader.dll" target="lib\netstandard2.0" />
+      <file src="Cake.VersionReader/bin/Release/netstandard2.0/Cake.VersionReader.xml" target="lib\netstandard2.0" />      
    </files>
 </package>
