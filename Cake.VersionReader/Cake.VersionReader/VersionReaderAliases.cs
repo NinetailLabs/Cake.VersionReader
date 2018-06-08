@@ -50,7 +50,7 @@ namespace Cake.VersionReader
         public static string GetVersionNumberWithContinuesIntegrationNumberAppended(this ICakeContext context, FilePath file, int buildNumber)
         {
             var version = GetVersionFromFile(context, file);
-            var adjustedVersion = $"{version.Major}.{version.Minor}.{version.Build}-CI{buildNumber.ToString("00000")}";
+            var adjustedVersion = $"{version.Major}.{version.Minor}.{version.Build}-CI{buildNumber:00000}";
             return adjustedVersion;
         }
 
@@ -65,7 +65,7 @@ namespace Cake.VersionReader
         public static string GetFullVersionNumberWithContinuesIntegrationNumberAppended(this ICakeContext context, FilePath file, int buildNumber)
         {
             var version = GetVersionFromFile(context, file);
-            var adjustedVersion = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}-CI{buildNumber.ToString("00000")}";
+            var adjustedVersion = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}-CI{buildNumber:00000}";
             return adjustedVersion;
         }
 

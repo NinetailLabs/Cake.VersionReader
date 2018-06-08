@@ -6,7 +6,8 @@
     <BreakingChangeFormat>^perf(\(.*\))*: </BreakingChangeFormat>
     <FeatureFormat>^feat(\(.*\))*: </FeatureFormat>
     <PatchFormat>^fix(\(.*\))*: </PatchFormat>
-    <RepositoryPath>$([System.IO.Path]::GetFullPath('$(SolutionDir)/..'))</RepositoryPath>
-    <SemVerStampActive>True</SemVerStampActive>
+    <RepositoryPath>$([System.IO.Path]::GetFullPath('$(SolutionDir)'))</RepositoryPath>
+    <SemVerStampActive>False</SemVerStampActive>
+    <SemVerStampActive Condition="'$(Configuration)' == 'Release'">True</SemVerStampActive>
   </PropertyGroup>
 </Project>
