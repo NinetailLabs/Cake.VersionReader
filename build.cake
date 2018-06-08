@@ -7,8 +7,8 @@
 
 var tools = "./tools";
 var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
-var nuspec = "./Cake.VersionReader/Cake.VersionReader.nuspec";
-var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release/net46";
+var nuspec = "./Cake.VersionReader/Cake.VersionReader/Cake.VersionReader.nuspec";
+var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release/netstandard2.0";
 var releaseDll = "/Cake.VersionReader.dll";
 var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 var unitTestPaths = "./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll";
