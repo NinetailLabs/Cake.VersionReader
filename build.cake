@@ -10,7 +10,6 @@ var sln = "./Cake.VersionReader/Cake.VersionReader.sln";
 var nuspec = "./Cake.VersionReader/Cake.VersionReader/Cake.VersionReader.nuspec";
 var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release/netstandard2.0";
 var releaseDll = "/Cake.VersionReader.dll";
-var nuspecFile = "./Cake.VersionReader/Cake.VersionReader.nuspec";
 var unitTestPaths = "./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll";
 var testResultFile = "./TestResult.xml";
 var testErrorFile = "./errors.xml";
@@ -88,7 +87,7 @@ Task ("Nuget")
 	.IsDependentOn ("UnitTest")
 	.Does (() => {
 		CreateDirectory ("./nupkg/");
-		ReplaceRegexInFiles(nuspecFile, "0.0.0", version);
+		ReplaceRegexInFiles(nuspec, "0.0.0", version);
 		
 		NuGetPack (nuspec, new NuGetPackSettings { 
 			Verbosity = NuGetVerbosity.Detailed,
