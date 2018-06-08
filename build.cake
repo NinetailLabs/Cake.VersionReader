@@ -85,7 +85,6 @@ Task("UnitTest")
 	});
 	
 Task ("Nuget")
-	.WithCriteria(buildType == "master")
 	.IsDependentOn ("UnitTest")
 	.Does (() => {
 		CreateDirectory ("./nupkg/");
