@@ -10,7 +10,7 @@
       <summary>Cake Build addon to assist with reading version numbers from an assembly.</summary>
       <licenseUrl>https://raw.githubusercontent.com/NinetailLabs/Cake.VersionReader/master/LICENSE</licenseUrl>
       <projectUrl>https://github.com/NinetailLabs/Cake.VersionReader</projectUrl>
-      <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
+      <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) NineTail Labs 2018</copyright>
       <releaseNotes>Updated Cake version
@@ -19,7 +19,7 @@
       <tags>Cake Script Build</tags>
 
       <dependencies>
-        <dependency id="Cake.Core" version="0.28.0" />
+        <dependency id="Cake.Core" version="0.33.0" />
       </dependencies>
    </metadata>
 
