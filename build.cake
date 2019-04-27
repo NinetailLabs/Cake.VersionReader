@@ -1,7 +1,7 @@
 //Addins
-#addin nuget:?package=Cake.VersionReader
-#addin nuget:?package=Cake.FileHelpers
-#tool "nuget:?package=NUnit.ConsoleRunner"
+#addin nuget:?package=Cake.VersionReader&version=5.0.0
+#addin nuget:?package=Cake.FileHelpers&version=3.2.0
+#tool "nuget:?package=NUnit.ConsoleRunner&version=3.10.0"
 
 #region Paths
 
@@ -12,7 +12,6 @@ var releaseFolder = "./Cake.VersionReader/Cake.VersionReader/bin/Release/netstan
 var releaseDll = "/Cake.VersionReader.dll";
 var unitTestPaths = "./Cake.VersionReader/Cake.VersionReader.Test/bin/Release/Cake.VersionReader.Tests.dll";
 var testResultFile = "./TestResult.xml";
-var testErrorFile = "./errors.xml";
 
 #endregion
 
@@ -51,7 +50,7 @@ Task ("Build")
 	.Does (() => {
 		NuGetRestore (sln);
 		MSBuild (sln, new MSBuildSettings {
-			ToolVersion = MSBuildToolVersion.VS2017,
+			ToolVersion = MSBuildToolVersion.VS2019,
 			Configuration = "Release"
 		});
 		var file = MakeAbsolute(Directory(releaseFolder)) + releaseDll;
@@ -70,13 +69,12 @@ Task("UnitTest")
 		StartBlock("Unit Testing");
 		
 		var testAssemblies = GetFiles(unitTestPaths);
-
+		
 		NUnit3(testAssemblies, new NUnit3Settings {
-    				ErrorOutputFile = testErrorFile,
-					OutputFile = testResultFile,
-					WorkingDirectory = ".",
-					Work = MakeAbsolute(Directory("."))
-    			});
+			OutputFile = testResultFile,
+			WorkingDirectory = ".",
+			Work = MakeAbsolute(Directory("."))
+		});
 
 		PushTestResults(testResultFile);
 		
