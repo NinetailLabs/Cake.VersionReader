@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Reflection;
+using System.Diagnostics;
 using Cake.Core;
 using Cake.Core.Annotations;
 using Cake.Core.IO;
@@ -78,7 +78,8 @@ namespace Cake.VersionReader
         private static Version GetVersionFromFile(ICakeContext context, FilePath file)
         {
             var filePath = file.MakeAbsolute(context.Environment).FullPath;
-            var version = AssemblyName.GetAssemblyName(filePath).Version;
+            var fileVersion = FileVersionInfo.GetVersionInfo(filePath);
+            var version = new Version(fileVersion.FileVersion);
             return version;
         }
     }
