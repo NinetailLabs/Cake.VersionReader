@@ -1,5 +1,5 @@
 //Addins
-#addin nuget:?package=Cake.VersionReader&version=5.0.0
+#addin nuget:?package=Cake.VersionReader&version=5.1.0
 #addin nuget:?package=Cake.FileHelpers&version=3.2.0
 #tool "nuget:?package=NUnit.ConsoleRunner&version=3.10.0"
 
